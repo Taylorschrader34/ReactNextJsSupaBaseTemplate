@@ -7,7 +7,7 @@ type Profiles = Database["public"]["Tables"]["profiles"]["Row"];
 
 export default function Avatar({ url }: { url: Profiles["avatar_url"] }) {
   const supabase = createClientComponentClient<Database>();
-  const [avatarUrl, setAvatarUrl] = useState<Profiles["avatar_url"]>(url);
+  const [avatarUrl, setAvatarUrl] = useState<Profiles["avatar_url"]>(null);
 
   useEffect(() => {
     async function downloadImage(path: string) {
@@ -18,7 +18,7 @@ export default function Avatar({ url }: { url: Profiles["avatar_url"] }) {
         if (error) {
           throw error;
         }
-
+        
         const url = URL.createObjectURL(data);
         setAvatarUrl(url);
       } catch (error) {

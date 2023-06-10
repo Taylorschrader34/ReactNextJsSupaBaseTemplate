@@ -14,7 +14,6 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* @ts-expect-error Server Component */}
         <Header></Header>
         <div className="container" style={{ padding: "50px 0 100px 0" }}>
           {children}

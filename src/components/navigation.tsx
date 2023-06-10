@@ -10,11 +10,14 @@ import {
 import { Database } from "../app/database.types";
 import { useCallback, useEffect, useState } from "react";
 import Avatar from "./avatar";
+import { usePathname } from "next/navigation";
 
 export default function Navigation({ session }: { session: Session | null }) {
   const supabase = createClientComponentClient<Database>();
+  const pathname = usePathname();
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
   const user = session?.user;
+  const isLoginPage = pathname === "/login";
 
   const getAvatarUrl = useCallback(async () => {
     try {
@@ -64,9 +67,17 @@ export default function Navigation({ session }: { session: Session | null }) {
             <Avatar url={avatar_url} />
           </Link>
         ) : (
-          <Link href="/signup" className="text-black font-bold">
-            <button> Sign Up</button>
-          </Link>
+          <>
+            {isLoginPage ? (
+              <Link href={"/signup"} className="text-black font-bold">
+                <button>Sign Up</button>
+              </Link>
+            ) : (
+              <Link href={"/login"} className="text-black font-bold">
+                <button>Login</button>
+              </Link>
+            )}
+          </>
         )}
       </div>
     </header>
