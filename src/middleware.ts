@@ -11,9 +11,6 @@ export async function middleware(req: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log(user);
-  console.log(req.nextUrl.pathname);
-
   // if user is signed in and the current path is /login or /signup, redirect the user to /account
   if (
     user &&
@@ -35,5 +32,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/account", "/signup"],
+  matcher: ["/login", "/account", "/signup", "/"],
 };

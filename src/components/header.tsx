@@ -1,14 +1,8 @@
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { cookies } from "next/headers";
-import { Database } from "../app/database.types";
+import { getUser } from "@/app/utils/auth/hooks/getUser";
 import Navigation from "./navigation";
 
 export default async function Header() {
-  const supabase = createServerComponentClient<Database>({ cookies });
+  const user = await getUser();
 
-  const {
-    data: { session },
-  } = await supabase.auth.getSession();
-
-  return <Navigation session={session} />;
+  return <Navigation user={user} />;
 }

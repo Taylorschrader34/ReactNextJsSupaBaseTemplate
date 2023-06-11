@@ -4,7 +4,7 @@ import Link from "next/link";
 import FullLogo from "../assets/images/example.png";
 import Image from "next/image";
 import {
-  Session,
+  User,
   createClientComponentClient,
 } from "@supabase/auth-helpers-nextjs";
 import { Database } from "../app/database.types";
@@ -12,11 +12,10 @@ import { useCallback, useEffect, useState } from "react";
 import Avatar from "./avatar";
 import { usePathname } from "next/navigation";
 
-export default function Navigation({ session }: { session: Session | null }) {
+export default function Navigation({ user }: { user: User | undefined }) {
   const supabase = createClientComponentClient<Database>();
   const pathname = usePathname();
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
-  const user = session?.user;
   const isLoginPage = pathname === "/login";
 
   const getAvatarUrl = useCallback(async () => {
@@ -62,7 +61,7 @@ export default function Navigation({ session }: { session: Session | null }) {
             </ul>
           </nav>
         </div>
-        {session?.user ? (
+        {user ? (
           <Link href={"/account"} className="">
             <Avatar url={avatar_url} />
           </Link>
